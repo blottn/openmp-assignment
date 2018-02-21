@@ -1,6 +1,27 @@
 #include <stdio.h>
 #include <omp.h>
 
+void quicksort(int* arr, int low, int high) {
+    if (low < high) {
+        int pivot_index = partition(arr,low,high);
+        quicksort(arr,low,pivot_index -1);
+        quicksort(arr,pivot_index + 1,high);
+    }
+}
+
+int partition(int* arr, int low, int high) {
+    int part_val = arr[high -1];
+    
+    return 0;
+}
+
+void swap(int* x, int* y) {
+    int temp = *x;
+    *x = *y;
+    *y = temp;
+}
+
+
 int main() {
     int x = 2;
 
@@ -23,3 +44,7 @@ int main() {
     }
     return 0;
 }
+
+
+
+
