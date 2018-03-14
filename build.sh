@@ -1,1 +1,1 @@
-gcc -fopenmp ./sort.c
+gcc -fopenmp ./prog.c

@@ -3,19 +3,27 @@
 #include <omp.h>
 
 void swap(int* x, int* y) {
-    int temp = x[0];
+    int temp = *x;
     *x = *y;
     *y = temp;
 }
 
+void print_arr(int * arr, int size) {
+    printf("arr: ");
+    for (int i = 0 ; i < size ; i++) {
+        printf("%d ", arr[i]);
+    }
+    printf("\n");
+}
+
 int partition(int* arr, int low, int high) {
     int pivot_val = arr[low];
-
     int left = low + 1;    //initialise markers
     int right = high - 1;
 
     while (right >= left) {
-        while ((left <= right) && (arr[left] <= pivot_val)) {
+    
+        while (left <= right && arr[left] <= pivot_val) {
             left++;
         }
         while (left <= right && arr[right] >= pivot_val) {
@@ -24,25 +32,25 @@ int partition(int* arr, int low, int high) {
 
         if (right >= left) {
             //do swap
-            swap(arr + left * sizeof(int),arr + right * sizeof(int));
+            swap(arr + left ,arr + right );
         }
     }
-
-    return left + 1;
+    swap(arr + right, arr + low);
+    return right;
 }
 
-void quicksort(int* arr, int low, int high) {
+void quicksort(int* arr, int low, int high, int num_threads) {
     if (low < high) {
         int pivot_index = partition(arr,low,high);
-        quicksort(arr,low,pivot_index -1);
-        quicksort(arr,pivot_index + 1,high);
+        quicksort(arr,low,pivot_index, num_threads / 2);
+        quicksort(arr,pivot_index + 1,high, num_threads / 2);
     }
 }
 
-int linear_search(int * arr, int size, int item) {
+int linear_search(int * arr, int size, int item, int threads) {
     int index = size;
     
-    #pragma omp parallel for shared(index) 
+    #pragma omp parallel for shared(index) num_threads(threads)
     for (int i = 0 ; i < size ; i++) {
         if (arr[i] == item) {
             if (i < index) {
@@ -52,6 +60,7 @@ int linear_search(int * arr, int size, int item) {
     }
     return index;
 }
+
 /*
 int main() {
 
