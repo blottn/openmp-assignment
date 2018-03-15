@@ -1,20 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <omp.h>
-
-void swap(int* x, int* y) {
-    int temp = *x;
-    *x = *y;
-    *y = temp;
-}
-
-void print_arr(int * arr, int size) {
-    printf("arr: ");
-    for (int i = 0 ; i < size ; i++) {
-        printf("%d ", arr[i]);
-    }
-    printf("\n");
-}
+#include "util.h"
 
 int partition(int* arr, int low, int high) {
     int pivot_val = arr[low];
@@ -60,29 +47,3 @@ int linear_search(int * arr, int size, int item, int threads) {
     }
     return index;
 }
-
-/*
-int main() {
-
-    int* arr = malloc(sizeof(int)*10);
-    for (int i = 0 ; i < 10 ; i++) {
-        arr[i] = i;
-    }
-
-    for (int i = 0 ; i < 10; i++) {
-        printf("%d\n",arr[i]);
-    }
-    
-    partition(arr,0,10);
-
-    for (int i = 0 ; i < 10; i++) {
-        printf("%d\n",arr[i]);
-    }
-
-    int index = linear_search(arr,10,4);
-    return 0;
-}
-*/
-
-
-

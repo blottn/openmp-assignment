@@ -16,7 +16,7 @@ int main() {
 //    swap(arr,arr + size - 1);
     start();
     //quicksort(arr,0,size,1);
-    linear_search(arr,size,-6,1);
+    linear_search(arr,size,-6,8);
     end();
     
 //    print_arr(arr,size);
