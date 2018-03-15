@@ -33,17 +33,3 @@ void quicksort(int* arr, int low, int high, int num_threads) {
         quicksort(arr,pivot_index + 1,high, num_threads / 2);
     }
 }
-
-int linear_search(int * arr, int size, int item, int threads) {
-    int index = size;
-    
-    #pragma omp parallel for shared(index) num_threads(threads)
-    for (int i = 0 ; i < size ; i++) {
-        if (arr[i] == item) {
-            if (i < index) {
-                index = i;
-            }
-        } 
-    }
-    return index;
-}
