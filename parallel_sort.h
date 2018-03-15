@@ -5,7 +5,7 @@
 
 int partition(int* arr, int low, int high) {
     int pivot_val = arr[low];
-    int left = low + 1;    //initialise markers
+    int left = low + 1;
     int right = high - 1;
 
     while (right >= left) {
@@ -18,7 +18,6 @@ int partition(int* arr, int low, int high) {
         }
 
         if (right >= left) {
-            //do swap
             swap(arr + left ,arr + right );
         }
     }
@@ -26,10 +25,10 @@ int partition(int* arr, int low, int high) {
     return right;
 }
 
-void quicksort(int* arr, int low, int high, int num_threads) {
+void parallel_quicksort(int* arr, int low, int high, int num_threads) {
     if (low < high) {
         int pivot_index = partition(arr,low,high);
-        quicksort(arr,low,pivot_index, num_threads / 2);
-        quicksort(arr,pivot_index + 1,high, num_threads / 2);
+        parallel_quicksort(arr,low,pivot_index, num_threads / 2);
+        parallel_quicksort(arr,pivot_index + 1,high, num_threads / 2);
     }
 }
