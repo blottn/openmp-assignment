@@ -1,9 +1,14 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <omp.h>
-#include "util.h"
 
-int partition(int* arr, int low, int high) {
+void parallel_swap(int *x, int *y) {
+	int temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
+int parallel_partition(int* arr, int low, int high) {
     int pivot_val = arr[low];
     int left = low + 1;
     int right = high - 1;
@@ -18,17 +23,37 @@ int partition(int* arr, int low, int high) {
         }
 
         if (right >= left) {
-            swap(arr + left ,arr + right );
+            parallel_swap(arr + left ,arr + right );
         }
     }
-    swap(arr + right, arr + low);
+    parallel_swap(arr + right, arr + low);
     return right;
 }
 
-void parallel_quicksort(int* arr, int low, int high, int num_threads) {
+void quicksort_helper(int* arr, int low, int high) {
     if (low < high) {
-        int pivot_index = partition(arr,low,high);
-        parallel_quicksort(arr,low,pivot_index, num_threads / 2);
-        parallel_quicksort(arr,pivot_index + 1,high, num_threads / 2);
+	    int pivot_index = parallel_partition(arr,low,high);
+		#pragma omp task
+		{
+    		quicksort_helper(arr,low,pivot_index);
+		}
+		#pragma omp task
+		{
+        	quicksort_helper(arr,pivot_index + 1,high);
+		}
     }
+}
+
+void parallel_quicksort(int *arr, int low, int high) {
+	#pragma omp parallel
+	{
+		#pragma omp single 
+		{
+			quicksort_helper(arr, low, high);
+		}
+	}
+}
+
+int main() {
+	printf("hello world\n");
 }

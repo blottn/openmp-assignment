@@ -1,7 +1,13 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <omp.h>
-#include "util.h"
+
+void serial_swap(int *x, int *y) {
+	int temp = *x;
+	*x = *y;
+	*y = temp;
+}
+
 
 int partition(int* arr, int low, int high) {
     int pivot_val = arr[low];
@@ -18,10 +24,10 @@ int partition(int* arr, int low, int high) {
         }
 
         if (right >= left) {
-            swap(arr + left ,arr + right );
+            parallel_swap(arr + left ,arr + right );
         }
     }
-    swap(arr + right, arr + low);
+    serial_swap(arr + right, arr + low);
     return right;
 }
 
