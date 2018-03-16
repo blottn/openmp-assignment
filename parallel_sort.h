@@ -1,6 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <omp.h>
+#include "timer.h"
 
 void parallel_swap(int *x, int *y) {
 	int temp = *x;
@@ -54,6 +55,8 @@ void parallel_quicksort(int *arr, int low, int high) {
 	}
 }
 
-int main() {
-	printf("hello world\n");
+int main(char ** argv, int argc) {
+	char buf[10];
+	read(0,buf,10);
+	printf("%c",buf[9]);
 }
