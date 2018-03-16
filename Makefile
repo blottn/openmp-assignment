@@ -11,12 +11,17 @@ buildsearch:
 	gcc -o s_search.out ./serial_search.c
 	gcc -fopenmp -o p_search.out ./parallel_search.c
 
+benchmarksearch:
+	./s_search.out 5 100000 357 >  benchmark_search.txt
+	echo "\n"                   >> benchmark_search.txt
+	./p_search.out 5 100000 357 >> benchmark_search.txt
+
 buildsort:
 	gcc -o s_sort.out ./serial_sort.c
 	gcc -fopenmp -o p_sort.out ./parallel_sort.c
 
-benchmark_sort:
-	./s_sort.out 5 100000 > benchmark_sort.txt
-	echo "\n"           >> benchmark_sort.txt
+benchmarksort:
+	./s_sort.out 5 100000 >  benchmark_sort.txt
+	echo "\n"             >> benchmark_sort.txt
 	./p_sort.out 5 100000 >> benchmark_sort.txt
 
