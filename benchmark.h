@@ -21,7 +21,7 @@ double end() {
 	struct timespec * end_t = malloc(sizeof(struct timespec));
 	clock_gettime(CLOCK_MONOTONIC,end_t);
 	double time =(double) (end_t->tv_sec - start_t->tv_sec);
-	time -= ((double) (end_t->tv_nsec - start_t->tv_nsec)) / (double) 1000000000;
+	time += ((double) (end_t->tv_nsec - start_t->tv_nsec)) / (double) 1000000000;
 	return time;
 }
 
@@ -33,6 +33,7 @@ int * get_file(char * fname, int size) {
 	int num;
 	while(fscanf(f,"%d\n",&num) == 1) {
 		arr[i] = num;
+		i++;
 	}
 	fclose(f);
 	return arr;
