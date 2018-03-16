@@ -9,6 +9,13 @@ void parallel_swap(int *x, int *y) {
 	*y = temp;
 }
 
+void print_arr(int * arr, int size) {
+	for (int i =0 ; i < size ; i++) {
+		printf("%d ",arr[i]);
+	}
+	printf("\n");
+}
+
 void insertion_sort(int * arr, int low, int high) {
 	for (int i = 1; i < high ; i++) {
 		int val = arr[i];
@@ -21,9 +28,8 @@ void insertion_sort(int * arr, int low, int high) {
 }
 
 int parallel_partition(int* arr, int low, int high) {
-	
-	int pi = rand() %(high - low);
-	parallel_swap(arr + low, arr + pi);
+	/*int pi = (high - low) / 2;
+	parallel_swap(arr + low, arr + pi);*/
 
     int pivot_val = arr[low];
     int left = low + 1;
@@ -47,10 +53,10 @@ int parallel_partition(int* arr, int low, int high) {
 }
 
 void quicksort_helper(int* arr, int low, int high) {
-	if (high - low < 30) { // quicksort is slower than insertion sort on fewer than 30 elements because the function entry is generally very expensive
+	/*if (high - low < 30) { // quicksort is slower than insertion sort on fewer than 30 elements because the function entry is generally very expensive
 		insertion_sort(arr,low,high);
 	}
-	else if (low < high) {
+	else */if (low < high) {
 	    int pivot_index = parallel_partition(arr,low,high);
 		
 		int top = pivot_index - 1;
@@ -65,7 +71,7 @@ void quicksort_helper(int* arr, int low, int high) {
 
 		#pragma omp task
 		{
-    		quicksort_helper(arr,low,top);
+    		quicksort_helper(arr,low,top + 1);
 		}
 		#pragma omp task
 		{
@@ -93,6 +99,7 @@ int main(int argc, char ** argv) {
 	double * times = malloc(sizeof(double)*iterations);
 	for (int i = 0 ; i < iterations ; i++) {
 		int * arr = get_ordered(size);
+		printf("here");
 		start();
 		parallel_sort(arr, size);
 		times[i] = end();
