@@ -2,15 +2,26 @@
 #include <time.h>
 
 //utilities to help with running benchmarks
-clock_t start_t;
+struct timespec * start_t;
 
 void start() {
-    start_t = clock();
+	if (start_t == NULL) {
+		start_t = malloc(sizeof(struct timespec));
+	}
+	clock_gettime(CLOCK_MONOTONIC, start_t);
 }
 
-double end() {
+/*double end() {
 	double time = ((double) (clock() - start_t)) / CLOCKS_PER_SEC;
 //    printf("duration: %f seconds\n",time);
+	return time;
+}*/
+
+double end() {
+	struct timespec * end_t = malloc(sizeof(struct timespec));
+	clock_gettime(CLOCK_MONOTONIC,end_t);
+	double time =(double) (end_t->tv_sec - start_t->tv_sec);
+	time -= ((double) (end_t->tv_nsec - start_t->tv_nsec)) / (double) 1000000000;
 	return time;
 }
 
