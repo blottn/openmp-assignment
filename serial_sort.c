@@ -22,6 +22,10 @@ void insertion_sort(int * arr, int low, int high) {
 
 
 int partition(int* arr, int low, int high) {
+
+	int pi = rand() % (high - low);
+	serial_swap(arr + low, arr + pi);
+
     int pivot_val = arr[low];
     int left = low + 1;
     int right = high - 1;
@@ -47,7 +51,7 @@ void serial_quicksort(int* arr, int low, int high) {
 	if (high - low < 30) { 	//quicksort is slower than insertion sort on fewer than 30 elements
 		insertion_sort(arr,low,high);
 	}
-    if (low < high) {
+	else if (low < high) {
         int pivot_index = partition(arr,low,high);
 
 		int top = pivot_index - 1;
@@ -64,11 +68,20 @@ void serial_quicksort(int* arr, int low, int high) {
     }
 }
 
+void print_arr(int * arr, int size) {
+	printf("arr: ");
+	for (int i= 0 ; i < size ; i++) {
+		printf("%d ",arr[i]);
+	}
+	printf("\n");
+}
+
 int main(int argc, char ** argv) {
+	
 	int iterations = atoi(argv[1]);
 	int size = atoi(argv[2]);
 
-	printf("Testing parallel sort with\n* %d iterations\n* %d numbers\n",iterations,size);
+	printf("Testing serial sort with\n* %d iterations\n* %d numbers\n",iterations,size);
 
 	double * times = malloc(sizeof(double)*iterations);
 	for (int i = 0 ; i < iterations ; i++) {

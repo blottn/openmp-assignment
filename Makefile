@@ -15,7 +15,8 @@ buildsort:
 	gcc -o s_sort.out ./serial_sort.c
 	gcc -fopenmp -o p_sort.out ./parallel_sort.c
 
-
-benchmark:
-	gcc -fopenmp prog.c -o prog.out
+benchmark_sort:
+	./s_sort.out 5 100000 > benchmark_sort.txt
+	echo "\n"           >> benchmark_sort.txt
+	./p_sort.out 5 100000 >> benchmark_sort.txt
 
