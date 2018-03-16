@@ -21,7 +21,7 @@ int main(char **  argv, int argc) {
 	int iterations = atoi(argv[1]);
 	int size = atoi(argv[2]);
 	int item = atoi(argv[3]);
-	double * times = malloc(sizeof(double) 
+	double * times = malloc(sizeof(double));
 	for (int i = 0 ; i < iterations ; i++) {
 		int * arr = get_ordered(size);
 		start();
