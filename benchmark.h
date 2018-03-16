@@ -1,15 +1,16 @@
 #include <time.h>
 
-//wrapper class to simplify time.h usage for timing things
-
+//utilities to help with running benchmarks
 clock_t start_t;
 
 void start() {
     start_t = clock();
 }
 
-void end() {
-    printf("duration: %f seconds\n",((double) (clock() - start_t)) / CLOCKS_PER_SEC);
+double end() {
+	double time = ((double) (clock() - start_t)) / CLOCKS_PER_SEC;
+    printf("duration: %f seconds\n",time);
+	return time;
 }
 
 int * get_file(char * fname, int size) {
