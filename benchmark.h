@@ -9,7 +9,7 @@ void start() {
 
 double end() {
 	double time = ((double) (clock() - start_t)) / CLOCKS_PER_SEC;
-    printf("duration: %f seconds\n",time);
+//    printf("duration: %f seconds\n",time);
 	return time;
 }
 
@@ -22,6 +22,7 @@ int * get_file(char * fname, int size) {
 	while(fscanf(f,"%d\n",&num) == 1) {
 		arr[i] = num;
 	}
+	fclose(f);
 	return arr;
 }
 
