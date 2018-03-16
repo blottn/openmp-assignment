@@ -1,4 +1,5 @@
 #include <stdlib.h>
+#include <stdio.h>
 #include "benchmark.h"
 
 /*
@@ -17,11 +18,15 @@ int serial_linear_search(int *arr, int size, int target) {
 	return index;
 }
 
-int main(char **  argv, int argc) {
+int main(int argc, char **  argv) {
+
 	int iterations = atoi(argv[1]);
 	int size = atoi(argv[2]);
 	int item = atoi(argv[3]);
-	double * times = malloc(sizeof(double));
+
+	printf("Testing serial search with\n* %d iterations\n* %d numbers\n* for the number %d\n",iterations,size,item);
+
+	double * times = malloc(sizeof(double)*iterations);
 	for (int i = 0 ; i < iterations ; i++) {
 		int * arr = get_ordered(size);
 		start();
@@ -33,4 +38,32 @@ int main(char **  argv, int argc) {
 		tot += times[i];
 	}
 	tot /= (double) iterations;
+	printf("average duration for ordered: %f\n",tot);
+
+	for (int i = 0 ; i < iterations ; i++) {
+		int * arr = get_reversed(size);
+		start();
+		serial_linear_search(arr, size, item);
+		times[i] = end();
+	}
+	tot = 0;
+	for (int i = 0 ; i < iterations ; i++) {
+		tot += times[i];
+	}
+	tot /= (double) iterations;
+	printf("average duration for reversed: %f\n",tot);
+	
+	for (int i = 0 ; i < iterations ; i++) {
+		int * arr = get_random(size);
+		start();
+		serial_linear_search(arr, size, item);
+		times[i] = end();
+	}
+	tot = 0;
+	for (int i = 0 ; i < iterations ; i++) {
+		tot += times[i];
+	}
+	tot /= (double) iterations;
+	printf("average duration for randomised: %f\n",tot);
+
 }

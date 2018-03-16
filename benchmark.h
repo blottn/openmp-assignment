@@ -1,3 +1,4 @@
+#include <stdio.h>
 #include <time.h>
 
 //utilities to help with running benchmarks
@@ -30,8 +31,8 @@ int * get_ordered(int size) {
 	return get_file("ordered.txt",size);
 }
 
-int * get_unorderd(int size) {
-	return get_file("unordered.txt",size);
+int * get_reversed(int size) {
+	return get_file("reversed.txt",size);
 }
 
 int * get_random(int size) {
