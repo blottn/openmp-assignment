@@ -1,7 +1,7 @@
 #include <stdlib.h>
 #include <stdio.h>
 #include <omp.h>
-#include "timer.h"
+#include "benchmark.h"
 
 void parallel_swap(int *x, int *y) {
 	int temp = *x;
@@ -45,16 +45,60 @@ void quicksort_helper(int* arr, int low, int high) {
     }
 }
 
-void parallel_quicksort(int *arr, int low, int high) {
+void parallel_sort(int *arr, int size) {
 	#pragma omp parallel
 	{
 		#pragma omp single 
 		{
-			quicksort_helper(arr, low, high);
+			quicksort_helper(arr, 0, size - 1);
 		}
 	}
 }
 
-int main(char ** argv, int argc) {
+int main(int argc, char ** argv) {
+	int iterations = atoi(argv[1]);
+	int size = atoi(argv[2]);
+
+	printf("Testing parallel sort with\n* %d iterations\n* %d numbers\n",iterations,size);
+
+	double * times = malloc(sizeof(double)*iterations);
+	for (int i = 0 ; i < iterations ; i++) {
+		int * arr = get_ordered(size);
+		start();
+		parallel_sort(arr, size);
+		times[i] = end();
+	}
+	double tot = 0;
+	for (int i = 0 ; i < iterations ; i++) {
+		tot += times[i];
+	}
+	tot /= (double) iterations;
+	printf("average duration for ordered: %f\n",tot);
+
+	for (int i = 0 ; i < iterations ; i++) {
+		int * arr = get_reversed(size);
+		start();
+		parallel_sort(arr, size);
+		times[i] = end();
+	}
+	tot = 0;
+	for (int i = 0 ; i < iterations ; i++) {
+		tot += times[i];
+	}
+	tot /= (double) iterations;
+	printf("average duration for reversed: %f\n",tot);
+	
+	for (int i = 0 ; i < iterations ; i++) {
+		int * arr = get_random(size);
+		start();
+		parallel_sort(arr, size);
+		times[i] = end();
+	}
+	tot = 0;
+	for (int i = 0 ; i < iterations ; i++) {
+		tot += times[i];
+	}
+	tot /= (double) iterations;
+	printf("average duration for randomised: %f\n",tot);
 
 }

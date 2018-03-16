@@ -24,7 +24,7 @@ int partition(int* arr, int low, int high) {
         }
 
         if (right >= left) {
-            parallel_swap(arr + left ,arr + right );
+            serial_swap(arr + left ,arr + right );
         }
     }
     serial_swap(arr + right, arr + low);
@@ -37,4 +37,8 @@ void serial_quicksort(int* arr, int low, int high) {
         serial_quicksort(arr,low,pivot_index);
         serial_quicksort(arr,pivot_index + 1,high);
     }
+}
+
+int main() {
+
 }
