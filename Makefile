@@ -1,10 +1,11 @@
 clean:
 	rm *.out
+	rm *.txt
 
 genfiles:
-	python gen.py 100000 0 > ordered
-	python gen.py 100000 1 > unordered
-	python gen.py 100000 2 > random
+	python gen.py 0 100000 > ordered.txt
+	python gen.py 1 100000 > unordered.txt
+	python gen.py 2 100000 > random.txt
 
 
 benchmark:

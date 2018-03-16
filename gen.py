@@ -8,7 +8,7 @@ if int(sys.argv[1]) == 0:
 		print(i)
 elif int(sys.argv[1]) == 1:
 	for i in range(0,size):
-		print(size - i)
+		print(size - i - 1)
 else:
 	for i in range(0,size):
 		print(str(int(random.uniform(0,size))))
