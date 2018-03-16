@@ -12,3 +12,5 @@ else:
 	#f.write(str(int(random.uniform(0,size))) + '\n') 
 	print(int(random.uniform(0,size)))
 
+
+print()	#terminate with a return line
